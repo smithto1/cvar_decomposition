@@ -1,6 +1,3 @@
-import os
-os.chdir('C:\\git\\2021_jobsearch\\medium')
-
 
 from numpy.random import RandomState
 import pandas as pd
