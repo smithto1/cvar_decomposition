@@ -1,2 +1,4 @@
 *.docx
 *.pdf
+__pycache__\*
+tex\*

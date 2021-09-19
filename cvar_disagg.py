@@ -1,17 +1,16 @@
-
-from numpy.random import RandomState
 import pandas as pd
+from numpy.random import RandomState
 
+# https://github.com/smithto1/cvar_decomposition/blob/master/cvar_dayset.py
 from cvar_dayset import CVARDayset
-
-rd = RandomState(1990)
 
 scale = 100
 n_assets = 2
 n_days = 250
+rd = RandomState(1990)
 
 asset_returns = pd.DataFrame(
-    rd.normal(loc=0, scale=scale, size=(n_days, n_assets)),
+    data=rd.normal(loc=0, scale=scale, size=(n_days, n_assets)),
     index=pd.date_range('2020-01-01', freq='B', periods=n_days),
     columns=['asset0', 'asset1']
 )
@@ -20,7 +19,7 @@ portfolio_0 = asset_returns.mul([100, 100], axis=1)
 
 cvar0 = CVARDayset(portfolio_0)
 
-cvar0.plot_cvar(quantile=.025)
+cvar0.plot_cvar(q=.025)
 
 
 
@@ -30,10 +29,13 @@ asset_returns['hedge1'] = asset_returns['asset1'] + noise
 portfolio_1= asset_returns.mul([100, 100, -100], axis=1)
 cvar1 = CVARDayset(portfolio_1)
 
-cvar0.plot_change(other=cvar1, quantile=.025)
+cvar0.plot_change(other=cvar1, q=.025)
 
 
-cvar0.plot_change(other=cvar1, quantile=.025, assets=['asset1', 'hedge1'])
+cvar0.plot_change(other=cvar1, q=.025, assets=['asset1', 'hedge1'])
+
+
+cvar1.cvar(q=.025, assets=False)
 
 
     
